@@ -3,7 +3,10 @@
 一个基于 Python + Tkinter 的桌面工具，用于校验 Windows 镜像文件的完整性。
 
 ## 截图
+'''
+<img width="648" height="613" alt="截图 2026-06-10 16-51-17" src="https://github.com/user-attachments/assets/838edae7-ec40-488a-a147-75f256e07fdd" />
 
+'''
 
 ## 功能
 
