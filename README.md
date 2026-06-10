@@ -3,10 +3,7 @@
 一个基于 Python + Tkinter 的桌面工具，用于校验 Windows 镜像文件的完整性。
 
 ## 截图
-'''
 <img width="648" height="613" alt="截图 2026-06-10 16-51-17" src="https://github.com/user-attachments/assets/838edae7-ec40-488a-a147-75f256e07fdd" />
-
-'''
 
 ## 功能
 
@@ -25,16 +22,16 @@
 ### 从源码运行
 
 ```
-pip install tkinterdnd2  
+pip install tkinterdnd2      
 python windows-ISO-verify.py
 ```
 
 ### 打包为可执行文件
 
 ```
-pip install pyinstaller  
-pyinstaller --onefile --name win-iso-verify windows-ISO-verify.py  
-\# 输出在 dist/ 目录下
+pip install pyinstaller      
+pyinstaller --onefile --name win-iso-verify windows-ISO-verify.py      
+# 输出在 dist/ 目录下
 ```
 
 > **注意**：PyInstaller 只能在当前操作系统上打当前系统的包。 要在 Windows 上生成 `.exe`，需要在 Windows 机器上执行上述命令。
