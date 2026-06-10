@@ -171,11 +171,19 @@ class App:
         self.lbl_progress = tk.Label(self.window, text="", fg="gray", font=FONT_SMALL)
         self.lbl_progress.pack()
 
-        # 结果
-        self.lbl_result = tk.Label(
-            self.window, text="", font=FONT_NORMAL, fg="black", justify=tk.LEFT
+        # 结果：状态 + 详情分开，状态居中大字，详情小字换行
+        result_frame = tk.Frame(self.window)
+        result_frame.pack(pady=(5, 0), fill=tk.X, padx=30)
+
+        self.lbl_status = tk.Label(
+            result_frame, text="", font=("", 14, "bold"), fg="black"
         )
-        self.lbl_result.pack(pady=(5, 0))
+        self.lbl_status.pack()
+
+        self.lbl_detail = tk.Label(
+            result_frame, text="", font=FONT_SMALL, fg="black", justify=tk.LEFT
+        )
+        self.lbl_detail.pack()
 
         # 校验按钮
         self.btn_verify = tk.Button(
@@ -213,7 +221,8 @@ class App:
 
         error = result.get("error")
         if error:
-            self.lbl_result.config(text=f"计算出错：{error}", fg="red")
+            self.lbl_status.config(text=f"计算出错", fg="red")
+            self.lbl_detail.config(text=f"错误信息：{error}", fg="red")
             return
 
         algo     = result["algo"]
@@ -222,25 +231,18 @@ class App:
         matched  = result["matched"]
 
         if matched:
-            self.lbl_result.config(
-                text=(
-                    f"校验通过！\n"
-                    f"算法：{algo.upper()}\n"
-                    f"计算值：{actual.upper()}\n"
-                    f"期望值：{expected.upper()}"
-                ),
-                fg="green",
-            )
+            self.lbl_status.config(text="校验通过", fg="green")
         else:
-            self.lbl_result.config(
-                text=(
-                    f"校验失败！\n"
-                    f"算法：{algo.upper()}\n"
-                    f"计算值：{actual.upper()}\n"
-                    f"期望值：{expected.upper()}"
-                ),
-                fg="red",
-            )
+            self.lbl_status.config(text="校验失败", fg="red")
+
+        self.lbl_detail.config(
+            text=(
+                f"算法：{algo.upper()}\n"
+                f"计算值：{actual.upper()}\n"
+                f"期望值：{expected.upper()}"
+            ),
+            fg="black",
+        )
 
     # ---- 回调 ----
 
@@ -281,12 +283,14 @@ class App:
 
     def _verify(self):
         if not self.filepath:
-            self.lbl_result.config(text="请先选择镜像文件！", fg="red")
+            self.lbl_status.config(text="请先选择镜像文件", fg="red")
+            self.lbl_detail.config(text="")
             return
 
         expected = self.hash_entry.get().strip().lower()
         if not expected:
-            self.lbl_result.config(text="请输入期望的哈希值！", fg="red")
+            self.lbl_status.config(text="请输入期望哈希值", fg="red")
+            self.lbl_detail.config(text="")
             return
 
         algo     = self.algo_var.get()
@@ -295,7 +299,8 @@ class App:
         self.btn_verify.config(state=tk.DISABLED, text="计算中...")
         self.progress["value"] = 0
         self.lbl_progress.config(text="0%")
-        self.lbl_result.config(text="")
+        self.lbl_status.config(text="")
+        self.lbl_detail.config(text="")
 
         def _run():
             try:
