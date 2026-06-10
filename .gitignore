@@ -1,0 +1,6 @@
+venv/
+.venv/
+dist/
+build/
+__pycache__/
+win-iso-verify.spec
