@@ -70,4 +70,4 @@ pyinstaller --onefile --name win-iso-verify windows-ISO-verify.py
 
 ## 许可证
 
-MIT
+GNU General Public License v3.0
